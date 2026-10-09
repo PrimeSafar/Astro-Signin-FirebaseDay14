@@ -1,0 +1,23 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { adminAuth } from "../firebase/server";
+
+const sessionCookie = Astro.cookies.get("session")?.value;
+
+if (!sessionCookie) {
+  return Astro.redirect("/auth");
+}
+
+let user = null;
+try {
+  user = await adminAuth.verifySessionCookie(sessionCookie, true);
+} catch {
+  return Astro.redirect("/auth");
+}
+---
+
+<BaseLayout title="Dashboard">
+  <h1>Welcome, {user.email}</h1>
+  <p>User ID: {user.uid}</p>
+  <a href="/api/auth/signout">Sign Out</a>
+</BaseLayout>
