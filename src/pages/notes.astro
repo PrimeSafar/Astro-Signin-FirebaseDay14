@@ -1,0 +1,9 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import NotesApp from "../components/NotesApp.jsx";
+---
+
+<BaseLayout title="My Notes">
+  <h1>Notes</h1>
+  <NotesApp client:load />
+</BaseLayout>

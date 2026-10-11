@@ -29,3 +29,28 @@ This is a project demonstrating how to integrate Firebase Authentication with an
 
 - Client-side authentication configured in `src/firebase/client.js`
 - Server-side token verification using Firebase Admin SDK in `src/firebase/server.js`
+
+## Firestore Operations
+
+```javascript
+// CREATE
+await addDoc(collection(db, "notes"), { ... });
+
+// READ (once)
+const snapshot = await getDocs(query(...));
+const items = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+
+// READ (real-time)
+const unsubscribe = onSnapshot(query(...), (snapshot) => {
+  // runs on every change
+});
+
+// UPDATE
+await updateDoc(doc(db, "notes", id), { title: "New" });
+
+// DELETE
+await deleteDoc(doc(db, "notes", id));
+
+// QUERY HELPERS
+query(collection(db, "notes"), where("authorId", "==", uid), orderBy("createdAt", "desc"))
+```
